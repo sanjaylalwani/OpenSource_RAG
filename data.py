@@ -1,22 +1,24 @@
-from qdrant_client import QdrantClient, models
-import json
-from sentence_transformers import SentenceTransformer
 import os
-qdrant_client = QdrantClient(
-    url=os.getenv("QDRANT_URL"), 
-    api_key=os.getenv("QDRANT_API_KEY"),)
+import json
+import logging
+from qdrant_client import QdrantClient, models
+from sentence_transformers import SentenceTransformer
+
+
+
+qdrant_client = QdrantClient(url=os.getenv("QDRANT_URL"), 
+                            api_key=os.getenv("QDRANT_API_KEY"),)
 
 encoder = SentenceTransformer('all-MiniLM-L6-v2')
 
 qdrant_client.create_collection(
     collection_name='rag_osc',
-    vectors_config=models.VectorParams(
-        size=encoder.get_sentence_embedding_dimension(),  # Vector size from the model
-        distance=models.Distance.COSINE
-    )
+    vectors_config=models.VectorParams(size=encoder.get_sentence_embedding_dimension(),  
+        distance=models.Distance.COSINE)
 )
 
 aipapers = list()
+logging.info("---Started getting data from source-----")
 with open('arxiv-metadata.json', 'r') as metadata:
     for paper in metadata:
         p = json.loads(paper)
@@ -29,9 +31,11 @@ with open('arxiv-metadata.json', 'r') as metadata:
                          })
          
 summaries = [aipaper['abstract'] for aipaper in aipapers]
+logging.info("---Completed getting data from source-----")
 embeddings = encoder.encode(summaries)
 
 # Insert data into the collection
+logging.info("---Started Insert data into the collection-----")
 qdrant_client.upsert(
     collection_name='rag_osc',
     points=[
@@ -43,3 +47,5 @@ qdrant_client.upsert(
         for i, (aipaper, emb) in enumerate(zip(aipapers, embeddings))
     ]
 )
+
+logging.info("---Completed Insert data into the collection-----")
