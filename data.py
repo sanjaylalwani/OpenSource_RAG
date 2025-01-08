@@ -1,10 +1,10 @@
 from qdrant_client import QdrantClient, models
 import json
 from sentence_transformers import SentenceTransformer
-
+import os
 qdrant_client = QdrantClient(
-    url="https://86ced502-a1c7-457f-970b-de8f0686d015.us-east4-0.gcp.cloud.qdrant.io:6333", 
-    api_key="pRwzQWXH6dPs3xOPq6UmoXMREbFDBBSO_zt37tGoX60pdFAtski_5A",)
+    url=os.getenv("QDRANT_URL"), 
+    api_key=os.getenv("QDRANT_API_KEY"),)
 
 encoder = SentenceTransformer('all-MiniLM-L6-v2')
 
