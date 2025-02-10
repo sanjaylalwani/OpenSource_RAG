@@ -2,9 +2,9 @@
 
 I have created this repository to create RAG with the help of all the Open Source Solutions.
 
-I am building LLM based solution which can help AI researcher 
+I am building chatbot on budget presented by India Finance Minister Mrs. Nirmala Sitharaman.
 
-Data: Kaggle have good data resources from arxiv
+Data: Budget Speech
 
 Technologies used
 ![image](https://github.com/user-attachments/assets/d7fc875e-c3b0-472a-a0ed-6edbc57db5e4)
