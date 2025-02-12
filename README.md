@@ -10,3 +10,7 @@ I am building chatbot on budget presented by India Finance Minister Mrs. Nirmala
 
 Technologies used
 ![image](https://github.com/user-attachments/assets/d7fc875e-c3b0-472a-a0ed-6edbc57db5e4)
+
+
+## Advanced RAG techniques used as follow,
+1. Chunk Overlapping: Chunk overlapping is a technique where a small portion of text from one chunk is included in the next. This helps to maintain contextual continuity between chunks.
