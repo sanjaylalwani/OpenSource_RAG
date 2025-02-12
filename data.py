@@ -6,6 +6,8 @@ from sentence_transformers import SentenceTransformer
 from dotenv import load_dotenv
 from pypdf import PdfReader
 
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
 reader = PdfReader("budget_speech.pdf")
 number_of_pages = len(reader.pages)
 
@@ -25,16 +27,26 @@ qdrant_client.create_collection(
         distance=models.Distance.COSINE)
 )
 
+text = ""
+for i in range(4, number_of_pages):
+    page = reader.pages[i]
+    text += page.extract_text()
+
 budget_list = list()
 cnt = 0
 logging.info("---Started getting data from source-----")
-for i in range(4, number_of_pages):
-    page = reader.pages[i]
-    text = page.extract_text()
-    budget_list.append({'page':str(i),
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=100)
+chunks = text_splitter.split_text(text)
+
+for i, chunk in enumerate(chunks):
+    budget_list.append({'page':str(i+3),
                             'content':text                        
                             })
- 
+
+# for i in range(4, number_of_pages):
+#     page = reader.pages[i]
+#     text = page.extract_text()
+
 idx = 0
 for doc in budget_list:
     idx = idx+1
