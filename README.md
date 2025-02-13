@@ -9,7 +9,8 @@ I am building chatbot on budget presented by India Finance Minister Mrs. Nirmala
 ![budget25](https://github.com/user-attachments/assets/483789c4-f845-4a78-8731-cac552eb2ad0)
 
 ## Technologies used
-![image](https://github.com/user-attachments/assets/d7fc875e-c3b0-472a-a0ed-6edbc57db5e4)
+![os](https://github.com/user-attachments/assets/61c0c10e-66ce-410d-b40e-5f3edebc18a4)
+
 
 
 ## Advanced RAG techniques used as follow,
