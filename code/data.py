@@ -8,7 +8,8 @@ from pypdf import PdfReader
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-reader = PdfReader("budget_speech.pdf")
+file_path = os.path.join("..", "data", "budget_speech_25.pdf")
+reader = PdfReader(file_path)
 number_of_pages = len(reader.pages)
 
 # Load environment variables from .env file
@@ -40,7 +41,7 @@ chunks = text_splitter.split_text(text)
 
 for i, chunk in enumerate(chunks):
     budget_list.append({'page':str(i+3),
-                            'content':text                        
+                            'content':chunk                        
                             })
 
 # for i in range(4, number_of_pages):
