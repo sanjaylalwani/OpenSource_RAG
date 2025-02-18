@@ -15,7 +15,27 @@ load_dotenv()
 qdrant_client = QdrantClient(url=os.getenv("QDRANT_URL"), api_key=os.getenv("QDRANT_API_KEY"),)
 encoder = SentenceTransformer('all-MiniLM-L6-v2')
 
+def rerank_with_llm(query, documents):
+    scores = []
+    llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0.7)
+    for doc in documents:
+        prompt = f"Given the query '{query}', how relevant is the following document? Document: '{doc}'"
+        # response = llm.predict(prompt)
+        messages = [("system","You are a helpful assistant that helps to rerank the document.",),
+            ("human", prompt),]
+        
+        try:
+            ai_msg = llm.invoke(messages)
+            score = float(ai_msg.content.strip())
+            print(ai_msg.content)
+        except ValueError:
+            score = 0
+        scores.append(score)
+    reranked_docs = [doc for _, doc in sorted(zip(scores, documents), reverse=True)]
+    return reranked_docs
+
 st.title("India Budget 25 Bot")
+
 # Initialize chat history
 if "messages" not in st.session_state:
     with st.chat_message("user"):
@@ -33,10 +53,11 @@ if input:
         limit=3,)
 
     results = [point.payload["content"] for point in hits]
-    context_text = "\n".join(results)
+
+    rerank_results = rerank_with_llm(input, results)
+    context_text = "\n".join(rerank_results)
 
     updated_prompt = f"Answer the following question concisely. Answer should be based on the context:\n\nContext:\n{context_text}\n\nQuestion: {input}\nAnswer:"
- 
     # Initialize Groq LLM
     llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0.7)
 
