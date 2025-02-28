@@ -48,7 +48,7 @@ for message in st.session_state.messages:
         
 input = st.chat_input("Say something")
 if input:
-    hits = qdrant_client.search(collection_name="rag_budget_25",
+    hits = qdrant_client.search(collection_name="rag_budget",
         query_vector=encoder.encode(input),
         limit=3,)
 
