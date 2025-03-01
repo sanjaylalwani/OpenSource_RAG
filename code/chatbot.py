@@ -21,7 +21,7 @@ def rerank_with_llm(query, documents):
     llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0.7)
     for doc in documents:
         prompt = f"Given the query '{query}', how relevant is the following document? Document: '{doc}'"
-        # response = llm.predict(prompt)
+        
         messages = [("system","You are a helpful assistant that helps to rerank the document.",),
             ("human", prompt),]
         
