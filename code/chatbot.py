@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+col_name = 'rag_budget'
 qdrant_client = QdrantClient(url=os.getenv("QDRANT_URL"), api_key=os.getenv("QDRANT_API_KEY"),)
 encoder = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -48,9 +49,7 @@ for message in st.session_state.messages:
         
 input = st.chat_input("Say something")
 if input:
-    hits = qdrant_client.search(collection_name="rag_budget",
-        query_vector=encoder.encode(input),
-        limit=3,)
+    hits = qdrant_client.similarity_search(collection_name=col_name, query=input, limit=3,)
 
     results = [point.payload["content"] for point in hits]
 
@@ -63,7 +62,9 @@ if input:
 
     # Create a simple prompt
     prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are chatbot which help to understand the budget presented by Indian Finance Minister for year 2025-2026."),
+        ("system", """You are chatbot which help to understand the budget presented by Indian Finance Ministers for different years from 2014 to 2025. You may have either Interim or Full budget, if its Interim budget, do look for Full budget as well. Interim budget is the budget which is presented before election, and then Full budget is presented.
+          Ensure you answers are concise, and to the point always.
+          Do not hallucinate, give answer from sources only, if source does not have context then say You dont know the answer."""),
         ("human","{newprompt}")])
 
     # Create the chain that guarantees JSON output
