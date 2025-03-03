@@ -1,2 +1,5 @@
 langchain-groq
 qdrant-client==1.9.2
+streamlit
+sentence_transformers
+dotenv
