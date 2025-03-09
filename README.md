@@ -2,6 +2,8 @@
 
 I have created this repository to create RAG with the help of all the Open Source Solutions.
 
-I am building chatbot on different budgets presented by India Finance Minister Mrs. Nirmala Sitharaman over the year. 
+I am building chatbot on different budgets presented by India Finance Minister over the years. 
 
-![budget25](https://github.com/user-attachments/assets/483789c4-f845-4a78-8731-cac552eb2ad0)
+## Steps to build
+1. Create conda environment
+2. Install 'pip install -r requirements.txt'
