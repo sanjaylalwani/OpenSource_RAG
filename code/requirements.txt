@@ -1,7 +1,8 @@
-langchain-groq
-qdrant-client==1.9.2
-streamlit
-sentence_transformers
-dotenv
+langchain-groq==0.2.4
+qdrant-client==1.13.2
+langchain-qdrant==0.2.0
+streamlit==1.42.2
+sentence_transformers==3.4.1
+dotenv==0.9.9
 langchain_community
-tiktoken
+tiktoken==0.9.0
