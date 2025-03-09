@@ -3,3 +3,5 @@ qdrant-client==1.9.2
 streamlit
 sentence_transformers
 dotenv
+langchain_community
+tiktoken
