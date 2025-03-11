@@ -49,12 +49,15 @@ for message in st.session_state.messages:
         
 input = st.chat_input("Say something")
 if input:
-    hits = qdrant_client.similarity_search(collection_name=col_name, query=input, limit=3,)
+    hits = qdrant_client.search(collection_name=col_name, 
+                               query_vector=encoder.encode(input).tolist(), 
+                               limit=5,)
 
     results = [point.payload["content"] for point in hits]
 
     rerank_results = rerank_with_llm(input, results)
     context_text = "\n".join(rerank_results)
+    print(context_text)
 
     updated_prompt = f"Answer the following question concisely. Answer should be based on the context:\n\nContext:\n{context_text}\n\nQuestion: {input}\nAnswer:"
     # Initialize Groq LLM

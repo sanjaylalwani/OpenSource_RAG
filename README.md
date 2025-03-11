@@ -5,3 +5,6 @@ I have created this repository to create RAG with the help of all the Open Sourc
 ## Steps to build
 1. Create conda environment
 2. Install 'pip install -r requirements.txt'
+
+## Run code locally
+'streamlit run chatbot.py'
