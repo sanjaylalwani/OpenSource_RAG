@@ -7,4 +7,6 @@ I have created this repository to create RAG with the help of all the Open Sourc
 2. Install 'pip install -r requirements.txt'
 
 ## Run code locally
-'streamlit run chatbot.py'
+```
+streamlit run chatbot.py
+```
